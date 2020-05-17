@@ -1,0 +1,109 @@
+#include <music.h>
+
+int buzzPin = GPIO_NUM_16;
+int channel = 0;
+
+int p1[][2] = //Um compasso por linha
+{{N_E4, COLCHEIA}, {N_E4, COLCHEIA}, {PAUSA, COLCHEIA}, {N_E4, COLCHEIA}, {PAUSA, COLCHEIA}, {N_C4, COLCHEIA}, {N_E4, MINIMA}, 
+{N_G4, MINIMA}, {PAUSA, MINIMA}, {N_G3, MINIMA}, {PAUSA, MINIMA},
+
+{N_C4, MINIMA}, {PAUSA, COLCHEIA}, {N_G3, MINIMA}, {PAUSA, COLCHEIA}, {N_E3, MINIMA}, {PAUSA, COLCHEIA},
+{PAUSA, COLCHEIA}, {N_A3, MINIMA}, {N_B3, MINIMA}, {N_BB3, COLCHEIA}, {N_A3, MINIMA},
+{N_G3, MINIMA}, {N_E4, MINIMA}, {N_G4, MINIMA}, {N_A4, MINIMA}, {N_F4, COLCHEIA}, {N_G4, COLCHEIA},
+{PAUSA, COLCHEIA}, {N_E4, MINIMA}, {N_C4, COLCHEIA}, {N_D4, COLCHEIA}, {N_B3, MINIMA}, {PAUSA, COLCHEIA},
+
+{N_C4, MINIMA}, {PAUSA, COLCHEIA}, {N_G3, MINIMA}, {PAUSA, COLCHEIA}, {N_E3, MINIMA}, {PAUSA, COLCHEIA},
+{PAUSA, COLCHEIA}, {N_A3, MINIMA}, {N_B3, MINIMA}, {N_BB3, COLCHEIA}, {N_A3, MINIMA},
+{N_G3, MINIMA}, {N_E4, MINIMA}, {N_G4, MINIMA}, {N_A4, MINIMA}, {N_F4, COLCHEIA}, {N_G4, COLCHEIA},
+{PAUSA, COLCHEIA}, {N_E4, MINIMA}, {N_C4, COLCHEIA}, {N_D4, COLCHEIA}, {N_B3, MINIMA}, {PAUSA, COLCHEIA},
+
+{PAUSA, MINIMA}, {N_G4, COLCHEIA}, {N_FS4, COLCHEIA}, {N_F4, COLCHEIA}, {N_DS4, MINIMA}, {N_E4, COLCHEIA}, 
+{PAUSA, COLCHEIA}, {N_GS3, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {PAUSA, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {N_D4, COLCHEIA},
+{PAUSA, MINIMA}, {N_G4, COLCHEIA}, {N_FS4, COLCHEIA}, {N_F4, COLCHEIA}, {N_DS4, MINIMA}, {N_E4, COLCHEIA}, 
+{PAUSA, COLCHEIA}, {N_G4, MINIMA}, {N_G4, COLCHEIA}, {N_G4, MINIMA}, {PAUSA, MINIMA},
+
+{PAUSA, MINIMA}, {N_G4, COLCHEIA}, {N_FS4, COLCHEIA}, {N_F4, COLCHEIA}, {N_DS4, MINIMA}, {N_E4, COLCHEIA}, 
+{PAUSA, COLCHEIA}, {N_GS3, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {PAUSA, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {N_D4, COLCHEIA},
+{PAUSA, MINIMA}, {N_EB4, MINIMA}, {PAUSA, COLCHEIA}, {N_D4, COLCHEIA}, {PAUSA, COLCHEIA}, 
+{N_C4, MINIMA}, {PAUSA, MINIMA}, {PAUSA, SEMIBREVE}, 
+
+{PAUSA, MINIMA}, {N_G4, COLCHEIA}, {N_FS4, COLCHEIA}, {N_F4, COLCHEIA}, {N_DS4, MINIMA}, {N_E4, COLCHEIA}, 
+{PAUSA, COLCHEIA}, {N_GS3, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {PAUSA, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {N_D4, COLCHEIA},
+{PAUSA, MINIMA}, {N_G4, COLCHEIA}, {N_FS4, COLCHEIA}, {N_F4, COLCHEIA}, {N_DS4, MINIMA}, {N_E4, COLCHEIA}, 
+{PAUSA, COLCHEIA}, {N_G4, MINIMA}, {N_G4, COLCHEIA}, {N_G4, MINIMA}, {PAUSA, MINIMA},
+
+{PAUSA, MINIMA}, {N_G4, COLCHEIA}, {N_FS4, COLCHEIA}, {N_F4, COLCHEIA}, {N_DS4, MINIMA}, {N_E4, COLCHEIA}, 
+{PAUSA, COLCHEIA}, {N_GS3, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {PAUSA, COLCHEIA}, {N_A3, COLCHEIA}, {N_C4, COLCHEIA}, {N_D4, COLCHEIA},
+{PAUSA, MINIMA}, {N_EB4, MINIMA}, {PAUSA, COLCHEIA}, {N_D4, COLCHEIA}, {PAUSA, COLCHEIA}, 
+{N_C4, MINIMA}, {PAUSA, MINIMA}, {PAUSA, SEMIBREVE}, 
+
+{-1, -1}
+};
+
+int p2[][2] = //Um compasso por linha
+{
+{(N_A4), COLCHEIA}, 
+{N_BB4, COLCHEIA}, 
+{N_B4, COLCHEIA}, 
+{N_C5, SEMINIMA}, 
+{-1, -1}
+};
+
+int p3[][2] = //Um compasso por linha
+{
+{(N_EB4), SEMICOLCHEIA}, 
+{N_EB4, SEMICOLCHEIA}, 
+{N_EB4, SEMICOLCHEIA}, 
+{N_EB4, MINIMA}, 
+
+{N_B3, MINIMA}, 
+{N_DB4, SEMICOLCHEIA}, 
+{N_EB4, MINIMA}, 
+{N_DB4, SEMICOLCHEIA},
+{N_EB4, SEMIBREVE}, 
+{-1, -1}
+};
+
+int p4[][2] = //Um compasso por linha
+{
+{(N_C4), SEMINIMA}, 
+{N_E4, SEMINIMA}, 
+{N_C4, MINIMA}, 
+{-1, -1}
+};
+
+void initializeBuzzer()
+{
+    pinMode(buzzPin, OUTPUT);
+    ledcAttachPin(buzzPin, 0);
+    ledcSetup(channel, 2000, 8);
+}
+
+void play(int partitura[][2])
+{
+    int i = 0;
+    while (true)
+    {
+        if (partitura[i][0] == -1)
+        {
+            break;
+        }
+        ledcWriteTone(channel, partitura[i][0]);
+        delay(partitura[i][1]);
+        delay(10);
+        i++;
+    }
+    ledcWriteTone(channel, 0);
+}
+
+void playInitSong(){
+    play(p2);
+}
+
+void playAcessSong(){
+    play(p3);
+}
+
+void playDeniedSong(){
+    play(p4);
+}
