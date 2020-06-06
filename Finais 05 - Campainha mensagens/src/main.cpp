@@ -8,12 +8,12 @@
 int btnPin = GPIO_NUM_4;
 int ledPin = GPIO_NUM_16;
 
-#define BOTtoken "1235018938:AAFcKaibsOmJ8FsmO0H_C-wccB8H4Vuh3PI"
+#define BOTtoken "BOT_KEY"//MUDAR
 
 WiFiClientSecure client;
 UniversalTelegramBot bot(BOTtoken, client);
 
-String id = "1103920585";
+String id = "chat_id";//MUDAR
 
 void setup()
 {
