@@ -1,6 +1,6 @@
 #include <music.h>
 
-int buzzPin = GPIO_NUM_16;
+int buzzPin = GPIO_NUM_4;
 int channel = 0;
 
 int p1[][2] = //Um compasso por linha
@@ -130,120 +130,61 @@ int p3[][2] = //Um compasso por linha
 
 int p4[][2] = //Um compasso por linha
 {
-{(N_C4), SEMINIMA}, 
+{N_C4, SEMINIMA}, 
 {N_E4, SEMINIMA}, 
 {N_C4, MINIMA}, 
 {-1, -1}
 };
 
-//Game of thrones
-int p5[][2] = //Um compasso por linha
-{
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_EB4, COLCHEIA}, {N_F4, COLCHEIA}, 
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_EB4, COLCHEIA}, {N_F4, COLCHEIA}, 
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_EB4, COLCHEIA}, {N_F4, COLCHEIA}, 
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_EB4, COLCHEIA}, {N_F4, COLCHEIA}, 
+double tempo = 1.0;
 
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_E4, COLCHEIA}, {N_F4, COLCHEIA}, 
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_E4, COLCHEIA}, {N_F4, COLCHEIA}, 
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_E4, COLCHEIA}, {N_F4, COLCHEIA}, 
-{N_G4, SEMINIMA}, {N_C3, SEMINIMA}, {N_E4, COLCHEIA}, {N_F4, COLCHEIA}, 
-
-{N_G4, MINIMA}, {N_G4, SEMINIMA},
-
-{N_C4, MINIMA}, {N_C4, SEMINIMA},
-
-{N_EB4, COLCHEIA}, {N_F4, COLCHEIA}, {N_G4, MINIMA},
-
-{N_C4, MINIMA}, {N_EB4, COLCHEIA}, {N_F4, COLCHEIA},
-
-{N_D4, SEMINIMA}, {N_G3, SEMINIMA}, {N_BB3, COLCHEIA}, {N_C4, COLCHEIA}, 
-
-{N_D4, SEMINIMA}, {N_G3, SEMINIMA}, {N_BB3, COLCHEIA}, {N_C4, COLCHEIA}, 
-
-{N_D4, SEMINIMA}, {N_G3, SEMINIMA}, {N_BB3, COLCHEIA}, {N_C4, COLCHEIA}, 
-
-{N_D4, SEMINIMA}, {N_G4, SEMINIMA}, {N_BB4, SEMINIMA},
-
-{N_F4, MINIMA}, {N_F4, SEMINIMA},
-
-{N_BB3, MINIMA}, {N_BB3, SEMINIMA},
-
-{N_EB4, COLCHEIA}, {N_D4, COLCHEIA}, {N_F4, MINIMA},
-
-{-1, -1}
-};
-
-//Song of storms
-int p6[][2] = //Um compasso por linha
-{
-{N_D4, COLCHEIA}, {N_F4, COLCHEIA}, {N_D5, MINIMA},
-
-{N_D4, COLCHEIA}, {N_F4, COLCHEIA}, {N_D5, MINIMA},
-
-{N_E5, SEMINIMA + COLCHEIA}, {N_F5, COLCHEIA}, {N_E5, COLCHEIA}, {N_F5, COLCHEIA},
-
-{N_E5, COLCHEIA}, {N_C5, COLCHEIA}, {N_A4, SEMINIMA}, {PAUSA, SEMINIMA},
-
-//------------------------------
-{N_A4, SEMINIMA}, {N_D4, SEMINIMA}, {N_F4, COLCHEIA}, {N_G4, COLCHEIA},
-
-{N_A4, MINIMA + SEMINIMA}, 
-
-{N_A4, SEMINIMA}, {N_D4, SEMINIMA}, {N_F4, COLCHEIA}, {N_G4, COLCHEIA},
-
-{N_E4, MINIMA + SEMINIMA}, 
-
-//------------------------------
-{N_D4, COLCHEIA}, {N_F4, COLCHEIA}, {N_D5, MINIMA},
-
-{N_D4, COLCHEIA}, {N_F4, COLCHEIA}, {N_D5, MINIMA},
-
-{N_E5, SEMINIMA + COLCHEIA}, {N_F5, COLCHEIA}, {N_E5, COLCHEIA}, {N_F5, COLCHEIA},
-
-{N_E5, COLCHEIA}, {N_C5, COLCHEIA}, {N_A4, SEMINIMA}, {PAUSA, SEMINIMA},
-
-//------------------------------
-{N_A4, SEMINIMA}, {N_D4, SEMINIMA}, {N_F4, COLCHEIA}, {N_G4, COLCHEIA},
-
-{N_A4, MINIMA}, {N_A4, SEMINIMA}, 
-
-{N_D4, 2*(MINIMA + SEMINIMA)},
-
-{-1, -1}
-};
-
+//Inicializa a saída PWM que acionará o buzzer
 void initializeBuzzer()
 {
+    //Configurando como saída
     pinMode(buzzPin, OUTPUT);
+    //Indicando uso do canal 0
     ledcAttachPin(buzzPin, 0);
+    //Configurando frequencia inicial de 2Khz e 8 bits de resolução
     ledcSetup(channel, 2000, 8);
 }
 
-void play(int partitura[][2])
-{
-    int i = 0;
-    while (true)
-    {
-        if (partitura[i][0] == -1)
-        {
-            break;
-        }
-        ledcWriteTone(channel, partitura[i][0]);
-        delay(partitura[i][1]);
-        i++;
-    }
+void playTone(){
+    //Coloca saída em 261hz
+    ledcWriteTone(channel, N_C4);
+    //Aguarda 1 segundo
+    delay(1000);
+    //Coloca a saída em 0Hz (silêncio)
     ledcWriteTone(channel, 0);
 }
 
+void play(int partitura[][2], double tMulti)
+{
+    int i = 0;//indice atual da nota
+    while (true)
+    {
+        if (partitura[i][0] == -1)//indicação de finalização da música
+        {
+            Serial.println("Saiu");
+            break;//se chegar ao indicador de fim da música, sai do loop
+        }
+        //Altera a frequência da saída para a frequência da nota
+        ledcWriteTone(channel, partitura[i][0]);
+        //Aguarda o tempo da nota, alterado pelo tempo indicado
+        delay(partitura[i][1]*tMulti);
+        i++;
+    }
+    ledcWriteTone(channel, 0); //Silencia a saída
+}
+
 void playInitSong(){
-    play(p6);
+    play(p1, tempo);
 }
 
 void playAcessSong(){
-    play(p3);
+    play(p3, tempo);
 }
 
 void playDeniedSong(){
-    play(p4);
+    play(p4, tempo);
 }
