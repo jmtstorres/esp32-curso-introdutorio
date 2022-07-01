@@ -2,8 +2,8 @@
 #include "ESP32_MailClient.h"
 
 // REPLACE WITH YOUR NETWORK CREDENTIALS
-const char* ssid = "NET-VIRTUA-JOAO";
-const char* password = "92437775ta";
+const char* ssid = "NOME_DA_REDE";
+const char* password = "SENHA_DA_REDE";
 
 // To send Email using Gmail use port 465 (SSL) and SMTP Server smtp.gmail.com
 // YOU MUST ENABLE less secure app option https://myaccount.google.com/lesssecureapps?pli=1

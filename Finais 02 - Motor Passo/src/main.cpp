@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include <Stepper.h>
 
-const int stepsPerRevolution = 100; // change this to fit the number of steps per revolution
+const int stepsPerRevolution = 100; // Passos por revolução
 
-// initialize the stepper library on pins 15,2,0,4
+// Inicializa o objeto do motor nos pinos 15,2,0,4
 Stepper myStepper(stepsPerRevolution, 15, 2, 4, 0);
 
-int stepCount = 0; // number of steps the motor has taken
+int stepCount = 0; // numero de passos já dados
 
 void setup()
 {
@@ -15,7 +15,7 @@ void setup()
 
 void loop()
 {
-  // step one step:
+  // Um passo a cada loop:
   myStepper.step(1);
   stepCount++;
   Serial.println(stepCount);

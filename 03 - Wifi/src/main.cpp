@@ -9,7 +9,7 @@ void setup(){
 
   Serial.begin(9600);
   pinMode(LED, OUTPUT);
-  WiFi.begin("NET-VIRTUA-JOAO", "92437775ta");
+  WiFi.begin("NOME_DA_REDE", "SENHA_DA_REDE");
   while (WiFi.status() != WL_CONNECTED){
     delay(500);
     Serial.println("Connecting to WiFi..");

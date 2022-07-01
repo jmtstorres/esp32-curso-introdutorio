@@ -4,8 +4,8 @@
 #include <display_esp.h>
 #include <clima.h>
 
-const char* ssid       = "NET_2GDC570B";
-const char* password   = "4BDC570B";
+const char* ssid       = "SSID_REDE";
+const char* password   = "SENHA_REDE";
 
 const char* ntpServer = "pool.ntp.org";
 const long  gmtOffset_sec = -3*3600;

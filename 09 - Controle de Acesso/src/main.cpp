@@ -18,7 +18,7 @@ void setup() {
   bool conectado = connectWifi();
   if(conectado){
     setFooterLeft("rede:");
-    setFooterRight(SSID_JOAO);
+    setFooterRight(SSID_REDE);
   }
   updateDisplay();
 

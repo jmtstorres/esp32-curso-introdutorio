@@ -1,7 +1,7 @@
 #include <connection_wifi.h>
 
-String ssid = SSID_JOAO;
-String passwd = PASSWD_JOAO;
+String ssid = SSID_REDE;
+String passwd = PASSWD_REDE;
 
 boolean connectWifi(){
   int wStatus = WL_DISCONNECTED;

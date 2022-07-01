@@ -4,8 +4,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
 
-#define SSID_JOAO    "NET-VIRTUA-JOAO"
-#define PASSWD_JOAO  "92437775ta"
+#define SSID_REDE    "NOME_DA_REDE"
+#define PASSWD_REDE  "SENHA_DA_REDE"
 
 boolean connectWifi();
 
